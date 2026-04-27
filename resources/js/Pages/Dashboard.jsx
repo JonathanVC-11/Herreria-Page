@@ -1,5 +1,6 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link } from '@inertiajs/react';
+import { BriefcaseIcon, TagIcon, Cog6ToothIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
 
 export default function Dashboard() {
     const s = {
@@ -7,41 +8,39 @@ export default function Dashboard() {
             minHeight: 'calc(100vh - 80px)',
             background: 'transparent',
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             justifyContent: 'center',
             padding: '24px',
-            fontFamily: 'DM Sans, sans-serif',
+            fontFamily: '"Inter", "DM Sans", sans-serif',
             position: 'relative',
         },
         card: {
-            background: 'rgba(255, 255, 255, 0.7)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.9)',
-            borderRadius: '32px',
-            padding: '48px 40px',
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
+            borderRadius: '24px',
+            padding: '48px',
             width: '100%',
-            maxWidth: '1000px',
+            maxWidth: '1100px',
             position: 'relative',
             zIndex: 1,
-            animation: 'fadeUp 0.6s ease both',
-            boxShadow: '0 30px 60px rgba(15,23,42,0.04)',
+            animation: 'fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
             overflow: 'hidden',
             boxSizing: 'border-box',
         },
         navCard: {
             background: '#ffffff',
-            border: '1px solid rgba(148,163,184,0.18)',
-            borderRadius: '20px',
-            padding: '32px',
+            border: '1px solid #e2e8f0',
+            borderRadius: '16px',
+            padding: '32px 24px',
             textDecoration: 'none',
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            boxShadow: '0 10px 30px rgba(15,23,42,0.02)',
+            alignItems: 'flex-start',
+            transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.02)',
             cursor: 'pointer',
-            minHeight: '200px',
+            minHeight: '180px',
         },
     };
 
@@ -49,149 +48,105 @@ export default function Dashboard() {
         <AdminLayout title="Panel Central">
             <Head title="Panel Central" />
             <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700;800&display=swap');
-                @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+                @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+                
                 .nav-card:hover {
-                    transform: translateY(-8px);
-                    box-shadow: 0 20px 40px rgba(0,61,165,0.1) !important;
-                    border-color: rgba(0,61,165,0.3) !important;
+                    transform: translateY(-4px);
+                    box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+                    border-color: #cbd5e1;
                 }
-                .nav-card:hover .icon-container {
-                    transform: scale(1.1);
-                    background: linear-gradient(135deg, #003DA5 0%, #002b80 100%) !important;
-                    color: white !important;
+                .nav-card:hover .icon-wrapper {
+                    transform: scale(1.05);
                 }
                 
-                /* Mobile Perfect Responsive Styles */
+                /* Tema Profesional Claro */
+                .theme-blue:hover { border-color: #cbd5e1; }
+                .theme-blue .icon-wrapper { background: #f0fdf4; color: #16a34a; }
+                
+                .theme-indigo:hover { border-color: #cbd5e1; }
+                .theme-indigo .icon-wrapper { background: #eef2ff; color: #4f46e5; }
+                
+                .theme-amber:hover { border-color: #cbd5e1; }
+                .theme-amber .icon-wrapper { background: #fffbeb; color: #d97706; }
+                
+                .theme-slate:hover { border-color: #cbd5e1; }
+                .theme-slate .icon-wrapper { background: #f8fafc; color: #475569; }
+
                 @media (max-width: 768px) {
-                    .dashboard-container {
-                        padding: 12px !important;
-                    }
-                    .dashboard-card {
-                        padding: 24px 16px !important;
-                        border-radius: 20px !important;
-                    }
-                    .dashboard-title {
-                        font-size: 24px !important;
-                        word-break: break-word;
-                    }
-                    .dashboard-grid {
-                        grid-template-columns: 1fr !important;
-                        gap: 16px !important;
-                    }
+                    .dashboard-container { padding: 12px !important; }
+                    .dashboard-card { padding: 32px 20px !important; border-radius: 20px !important; }
+                    .dashboard-title { font-size: 28px !important; }
+                    .dashboard-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
                     .nav-card {
                         padding: 24px !important;
                         min-height: auto !important;
                         flex-direction: row !important;
-                        justify-content: flex-start !important;
-                        text-align: left !important;
+                        align-items: center !important;
                     }
-                    .nav-card .icon-container {
-                        margin-bottom: 0 !important;
-                        margin-right: 20px !important;
-                        flex-shrink: 0 !important;
-                    }
-                    .nav-card .text-container {
-                        display: flex;
-                        flex-direction: column;
-                    }
-                    .nav-card h3 {
-                        margin-bottom: 4px !important;
-                        font-size: 18px !important;
-                        word-break: break-word;
-                    }
-                    .nav-card p {
-                        text-align: left !important;
-                    }
+                    .nav-card .icon-wrapper { margin-bottom: 0 !important; margin-right: 16px !important; }
+                    .nav-card .text-container { display: flex; flex-direction: column; }
+                    .nav-card h3 { margin-bottom: 4px !important; font-size: 16px !important; }
                 }
             `}</style>
 
             <div style={s.page} className="dashboard-container">
-                {/* Decoraciones de fondo */}
-                <div style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%', overflow: 'hidden', zIndex: 0, pointerEvents: 'none' }}>
-                    <div style={{ position: 'absolute', top: '-10%', left: '-5%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(0,61,165,0.04) 0%, transparent 70%)', filter: 'blur(40px)' }}></div>
-                    <div style={{ position: 'absolute', bottom: '-10%', right: '-5%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(212,160,23,0.04) 0%, transparent 70%)', filter: 'blur(40px)' }}></div>
-                </div>
-
                 <div style={s.card} className="dashboard-card">
-                    <div style={{ textAlign: 'center', marginBottom: '56px' }}>
-                        <span style={{ 
-                            background: 'rgba(0,61,165,0.05)',
-                            color: '#003DA5',
-                            padding: '8px 24px',
-                            borderRadius: '50px',
-                            fontWeight: '800',
-                            letterSpacing: '2px',
-                            textTransform: 'uppercase',
-                            fontSize: '12px',
-                            border: '1px solid rgba(0,61,165,0.1)',
-                            display: 'inline-block',
-                            marginBottom: '20px'
-                        }}>
-                            Panel de Administración
-                        </span>
-                        <h1 className="dashboard-title" style={{ color: '#0f172a', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: '900', fontFamily: 'Syne, sans-serif', margin: '0 0 16px', letterSpacing: '-1px' }}>
-                            ¿Qué deseas <span style={{ 
-                                background: 'linear-gradient(135deg, #003DA5 0%, #D4A017 100%)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                            }}>gestionar</span> hoy?
+                    <div style={{ marginBottom: '48px' }}>
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="h-2 w-8 bg-indigo-600 rounded-full"></div>
+                            <span className="text-sm font-bold text-slate-500 uppercase tracking-wider">Workspace Principal</span>
+                        </div>
+                        <h1 className="dashboard-title" style={{ color: '#0f172a', fontSize: '36px', fontWeight: '800', margin: '0 0 12px', letterSpacing: '-0.02em', lineHeight: '1.2' }}>
+                            Bienvenido al Panel de Control
                         </h1>
-                        <p style={{ color: '#64748b', fontSize: '16px', fontWeight: '500', maxWidth: '500px', margin: '0 auto' }}>
-                            Selecciona uno de los módulos disponibles para administrar el contenido de tu plataforma.
+                        <p style={{ color: '#64748b', fontSize: '16px', fontWeight: '400', maxWidth: '600px', lineHeight: '1.6' }}>
+                            Gestiona el contenido público, proyectos y configuraciones generales desde este espacio de administración.
                         </p>
                     </div>
 
-                    <div className="dashboard-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px', position: 'relative', zIndex: 2 }}>
+                    <div className="dashboard-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
                         
-                        <Link href="/proyectos" style={{...s.navCard, background: 'rgba(255,255,255,0.8)', border: '1px solid rgba(0,61,165,0.1)'}} className="nav-card">
-                            <div className="icon-container" style={{ width: '72px', height: '72px', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(0,61,165,0.05) 0%, rgba(0,61,165,0.1) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)', color: '#003DA5' }}>
-                                <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                </svg>
+                        <Link href="/proyectos" style={s.navCard} className="nav-card theme-indigo">
+                            <div className="icon-wrapper" style={{ width: '48px', height: '48px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', transition: 'all 0.3s ease' }}>
+                                <BriefcaseIcon className="w-6 h-6" />
                             </div>
                             <div className="text-container">
-                                <h3 style={{ color: '#0f172a', fontSize: '20px', fontWeight: '800', fontFamily: 'Syne, sans-serif', marginBottom: '8px' }}>Proyectos</h3>
-                                <p style={{ color: '#64748b', fontSize: '14px', textAlign: 'center', fontWeight: '500', lineHeight: '1.5' }}>Gestiona el portafolio de trabajos y cotizaciones.</p>
+                                <h3 style={{ color: '#0f172a', fontSize: '18px', fontWeight: '700', marginBottom: '8px', letterSpacing: '-0.01em' }}>Proyectos</h3>
+                                <p style={{ color: '#64748b', fontSize: '14px', fontWeight: '400', lineHeight: '1.5' }}>Gestiona el portafolio de trabajos, fotos y cotizaciones.</p>
                             </div>
                         </Link>
 
-                        <Link href="/categorias" style={{...s.navCard, background: 'rgba(255,255,255,0.8)', border: '1px solid rgba(212,160,23,0.1)'}} className="nav-card">
-                            <div className="icon-container" style={{ width: '72px', height: '72px', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(212,160,23,0.05) 0%, rgba(212,160,23,0.1) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)', color: '#D4A017' }}>
-                                <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                                </svg>
+                        <Link href="/categorias" style={s.navCard} className="nav-card theme-amber">
+                            <div className="icon-wrapper" style={{ width: '48px', height: '48px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', transition: 'all 0.3s ease' }}>
+                                <TagIcon className="w-6 h-6" />
                             </div>
                             <div className="text-container">
-                                <h3 style={{ color: '#0f172a', fontSize: '20px', fontWeight: '800', fontFamily: 'Syne, sans-serif', marginBottom: '8px' }}>Categorías</h3>
-                                <p style={{ color: '#64748b', fontSize: '14px', textAlign: 'center', fontWeight: '500', lineHeight: '1.5' }}>Administra los diferentes tipos de servicios.</p>
+                                <h3 style={{ color: '#0f172a', fontSize: '18px', fontWeight: '700', marginBottom: '8px', letterSpacing: '-0.01em' }}>Categorías</h3>
+                                <p style={{ color: '#64748b', fontSize: '14px', fontWeight: '400', lineHeight: '1.5' }}>Clasifica tus proyectos en diferentes tipos de servicios.</p>
                             </div>
                         </Link>
 
-                        <Link href="/admin/settings" style={{...s.navCard, background: 'rgba(255,255,255,0.8)', border: '1px solid rgba(100,116,139,0.1)'}} className="nav-card">
-                            <div className="icon-container" style={{ width: '72px', height: '72px', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(100,116,139,0.05) 0%, rgba(100,116,139,0.1) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)', color: '#475569' }}>
-                                <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
+                        <Link href="/admin/settings" style={s.navCard} className="nav-card theme-slate">
+                            <div className="icon-wrapper" style={{ width: '48px', height: '48px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', transition: 'all 0.3s ease' }}>
+                                <Cog6ToothIcon className="w-6 h-6" />
                             </div>
                             <div className="text-container">
-                                <h3 style={{ color: '#0f172a', fontSize: '20px', fontWeight: '800', fontFamily: 'Syne, sans-serif', marginBottom: '8px' }}>Configuración</h3>
-                                <p style={{ color: '#64748b', fontSize: '14px', textAlign: 'center', fontWeight: '500', lineHeight: '1.5' }}>Ajustes globales, textos e información.</p>
+                                <h3 style={{ color: '#0f172a', fontSize: '18px', fontWeight: '700', marginBottom: '8px', letterSpacing: '-0.01em' }}>Configuración</h3>
+                                <p style={{ color: '#64748b', fontSize: '14px', fontWeight: '400', lineHeight: '1.5' }}>Ajusta textos globales, colores y enlaces sociales.</p>
                             </div>
                         </Link>
 
-                        <a href="/" target="_blank" rel="noopener noreferrer" style={{...s.navCard, background: 'rgba(255,255,255,0.8)', border: '1px solid rgba(16,185,129,0.1)'}} className="nav-card">
-                            <div className="icon-container" style={{ width: '72px', height: '72px', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(16,185,129,0.05) 0%, rgba(16,185,129,0.1) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)', color: '#059669' }}>
-                                <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                                </svg>
+                        <a href="/" target="_blank" rel="noopener noreferrer" style={s.navCard} className="nav-card theme-blue">
+                            <div className="icon-wrapper" style={{ width: '48px', height: '48px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', transition: 'all 0.3s ease' }}>
+                                <GlobeAltIcon className="w-6 h-6" />
                             </div>
                             <div className="text-container">
-                                <h3 style={{ color: '#0f172a', fontSize: '20px', fontWeight: '800', fontFamily: 'Syne, sans-serif', marginBottom: '8px' }}>Sitio Público</h3>
-                                <p style={{ color: '#64748b', fontSize: '14px', textAlign: 'center', fontWeight: '500', lineHeight: '1.5' }}>Visualiza la página web activa.</p>
+                                <h3 style={{ color: '#0f172a', fontSize: '18px', fontWeight: '700', marginBottom: '8px', letterSpacing: '-0.01em' }}>Sitio Público</h3>
+                                <p style={{ color: '#64748b', fontSize: '14px', fontWeight: '400', lineHeight: '1.5' }}>Abre una nueva pestaña para ver la web activa.</p>
                             </div>
                         </a>
+
                     </div>
                 </div>
             </div>
