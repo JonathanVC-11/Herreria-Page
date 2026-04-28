@@ -42,27 +42,6 @@ class Project extends Model
      */
     public function getImageUrlAttribute()
     {
-        if (empty($this->image_path)) {
-            return null;
-        }
-
-        $path = $this->image_path;
-
-        // Si es un string que parece un JSON de array (ej. '["proyectos/foto.jpg"]')
-        if (is_string($path) && str_starts_with($path, '[')) {
-            $decoded = json_decode($path, true);
-            if (is_array($decoded) && count($decoded) > 0) {
-                $path = $decoded[0]; // Tomamos la primera foto
-            }
-        }
-        // Si ya es un array nativo
-        elseif (is_array($path) && count($path) > 0) {
-            $path = $path[0];
-        }
-
-        // Limpiamos comillas accidentales y barras
-        $path = trim($path, ' "/');
-
-        return rtrim(env('AWS_URL'), '/') . '/' . $path;
+        return $this->image_path ? 'https://pub-4a2423514ab649f9958a61a720de08df.r2.dev/' . ltrim($this->image_path, '/') : null;
     }
 }

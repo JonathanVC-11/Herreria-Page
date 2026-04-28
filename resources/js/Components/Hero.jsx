@@ -238,13 +238,7 @@ export default function Hero({ proyectos = [], onProductoClick }) {
                 <div className="hero-image-content" style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', position: 'relative', width: '100%' }}>
                   <div className="image-modern-wrapper">
                     <img 
-                      src={
-                        proyecto.image_url 
-                          ? proyecto.image_url 
-                          : proyecto.image_path 
-                            ? `https://pub-4a2423514ab649f9958a61a720de08df.r2.dev/${Array.isArray(proyecto.image_path) ? proyecto.image_path[0] : (typeof proyecto.image_path === 'string' && proyecto.image_path.startsWith('[') ? JSON.parse(proyecto.image_path)[0] : proyecto.image_path).replace(/^\/+/, '')}`
-                            : '/imagenes/asador-1.png'
-                      } 
+                      src={proyecto.image_url || '/imagenes/asador-1.png'} 
                       alt={proyecto.title}
                       className="hero-modern-photo"
                     />
