@@ -107,7 +107,7 @@ export default function Productos({ onClose, productos = [], categoriaSelecciona
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
                 <div className="card-image-container">
-                  <img src={p.image_path ? (p.image_path.startsWith('/') || p.image_path.startsWith('data:image') ? p.image_path : `/storage/${p.image_path}`) : '/imagenes/asador-1.png'} alt={p.title} className="product-img" />
+                  <img src={p.image_url || '/imagenes/asador-1.png'} alt={p.title} className="product-img" />
                   <div className="card-gradient-overlay"></div>
                   <div className="card-badge">
                     {p.category?.name || 'Diseño Especial'}
@@ -163,7 +163,7 @@ export default function Productos({ onClose, productos = [], categoriaSelecciona
            
            <div className="detail-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', padding: '40px' }}>
              <div className="detail-image-wrapper">
-               <img src={seleccionado.image_path ? (seleccionado.image_path.startsWith('/') || seleccionado.image_path.startsWith('data:image') ? seleccionado.image_path : `/storage/${seleccionado.image_path}`) : '/imagenes/asador-1.png'} alt={seleccionado.title} className="detail-img" />
+               <img src={seleccionado.image_url || '/imagenes/asador-1.png'} alt={seleccionado.title} className="detail-img" />
                <div className="tech-corner top-left"></div>
                <div className="tech-corner bottom-right"></div>
              </div>

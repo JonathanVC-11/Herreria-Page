@@ -374,7 +374,7 @@ export default function Index({ proyectos }) {
                             {filteredProyectos.map(p => (
                                 <tr key={p.id} className="data-row">
                                     <td data-label="Imagen">
-                                        <img src={p.image_path ? (p.image_path.startsWith('/') || p.image_path.startsWith('data:image') ? p.image_path : `/storage/${p.image_path}`) : '/imagenes/asador-1.png'} className="project-img" />
+                                        <img src={p.image_url || '/imagenes/asador-1.png'} className="project-img" />
                                     </td>
                                     <td data-label="Título" style={{ fontWeight: '800', fontSize: '16px' }}>{p.title}</td>
                                     <td data-label="Categoría">

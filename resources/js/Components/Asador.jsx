@@ -7,7 +7,7 @@ export default function Asador({ productos = [] }) {
   
   const getImagePath = (producto) => {
     if (!producto?.image_path) return '/imagenes/asador-1.png';
-    return producto.image_path.startsWith('/') || producto.image_path.startsWith('data:image') ? producto.image_path : `/storage/${producto.image_path}`;
+    return producto.image_url || '/imagenes/asador-1.png';
   };
 
   const fotosProducto = productos.length > 0 

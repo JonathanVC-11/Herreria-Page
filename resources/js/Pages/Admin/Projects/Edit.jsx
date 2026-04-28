@@ -263,7 +263,7 @@ export default function Edit({ proyecto, categories = [] }) {
                             {proyecto.image_path && !data.image && (
                                 <div style={{ marginTop: '16px' }}>
                                     <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '8px' }}>Imagen Actual:</p>
-                                    <img src={proyecto.image_path.startsWith('/') || proyecto.image_path.startsWith('data:image') ? proyecto.image_path : `/storage/${proyecto.image_path}`} alt="Actual" style={{ height: '80px', borderRadius: '8px', objectFit: 'cover' }} />
+                                    <img src={proyecto.image_url || '/imagenes/asador-1.png'} alt="Actual" style={{ height: '80px', borderRadius: '8px', objectFit: 'cover' }} />
                                 </div>
                             )}
                             <div style={{ background: '#ffffff', padding: '16px', borderRadius: '16px', border: '1px solid rgba(0,61,165,0.1)' }}>

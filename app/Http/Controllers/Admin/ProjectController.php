@@ -95,10 +95,10 @@ class ProjectController extends Controller
 
         // Si el usuario sube una nueva imagen al editar
         if ($request->hasFile('image')) {
-            // Eliminar imagen anterior si existe
-            if ($proyecto->image_path && str_starts_with($proyecto->image_path, '/storage/')) {
-                $oldPath = str_replace('/storage/', 'public/', $proyecto->image_path);
-                Storage::delete($oldPath);
+            // Eliminar imagen anterior si existe en R2
+            if ($proyecto->image_path) {
+                $filename = basename($proyecto->image_path);
+                Storage::disk('r2')->delete('projects/' . $filename);
             }
             
             // Procesamos y guardamos la nueva imagen
@@ -116,9 +116,9 @@ class ProjectController extends Controller
     public function destroy(Project $proyecto)
     {
         // Borrar imagen al eliminar proyecto
-        if ($proyecto->image_path && str_starts_with($proyecto->image_path, '/storage/')) {
-            $oldPath = str_replace('/storage/', 'public/', $proyecto->image_path);
-            Storage::delete($oldPath);
+        if ($proyecto->image_path) {
+            $filename = basename($proyecto->image_path);
+            Storage::disk('r2')->delete('projects/' . $filename);
         }
         
         $proyecto->delete();
@@ -143,12 +143,12 @@ class ProjectController extends Controller
         
         // Generamos un nombre único y ruta
         $filename = uniqid('project_', true) . '.webp';
-        $path = 'public/projects/' . $filename;
+        $path = 'projects/' . $filename;
         
-        // Guardamos el archivo
-        Storage::put($path, $encoded);
+        // Guardamos el archivo en el disco r2 de forma privada (o sin public si R2 no es público)
+        Storage::disk('r2')->put($path, $encoded);
         
-        // Retornamos la URL pública
-        return '/storage/projects/' . $filename;
+        // Retornamos la ruta relativa para guardarla en Neon
+        return $path;
     }
 }

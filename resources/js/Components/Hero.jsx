@@ -238,7 +238,7 @@ export default function Hero({ proyectos = [], onProductoClick }) {
                 <div className="hero-image-content" style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', position: 'relative', width: '100%' }}>
                   <div className="image-modern-wrapper">
                     <img 
-                      src={proyecto.image_path ? (proyecto.image_path.startsWith('/') || proyecto.image_path.startsWith('data:image') ? proyecto.image_path : `/storage/${proyecto.image_path}`) : '/imagenes/asador-1.png'} 
+                      src={proyecto.image_url || '/imagenes/asador-1.png'} 
                       alt={proyecto.title}
                       className="hero-modern-photo"
                     />
