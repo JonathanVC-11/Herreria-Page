@@ -125,10 +125,11 @@ class ProjectController extends Controller
 
     /**
      * --- MÉTODO PRIVADO ---
-     * Al no forzar un disco, Laravel usará el disco 'r2' configurado en Vercel por defecto.
+     * Guarda la imagen en el disco 'r2' y retorna el $path exacto.
      */
     private function processAndSaveImage($file)
     {
-        return $file->store('proyectos');
+        $path = $file->store('proyectos', 'r2');
+        return $path;
     }
 }
