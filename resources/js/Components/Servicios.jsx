@@ -139,7 +139,7 @@ export default function Servicios({ proyectos, categorias = [] }) {
                             >
                               <div className="card-image-wrapper">
                                 <img 
-                                  src={p.image_url || '/imagenes/asador-1.png'} 
+                                  src={p.image_path ? `https://pub-4a2423514ab649f9958a61a720de08df.r2.dev/${p.image_path}` : '/imagenes/asador-1.png'} 
                                   alt={p.title} 
                                   className="card-image"
                                 />
