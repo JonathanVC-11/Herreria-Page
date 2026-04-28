@@ -49,19 +49,21 @@ class ProjectController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
 
-        $imagePath = null;
+        $proyecto = new Project();
+        $proyecto->title = $request->title;
+        $proyecto->category_id = $request->category_id;
+        $proyecto->description = $request->description;
+        $proyecto->price = $request->price;
 
         if ($request->hasFile('image')) {
-            $imagePath = $this->processAndSaveImage($request->file('image'));
+            // 1. Guardamos el archivo en R2 y capturamos el string de la ruta (ej. 'proyectos/hash.jpg')
+            $path = $request->file('image')->store('proyectos', 'r2');
+            
+            // 2. Asignamos EL STRING DIRECTAMENTE al modelo, NUNCA un índice o llave.
+            $proyecto->image_path = $path;
         }
 
-        Project::create([
-            'title' => $request->title,
-            'category_id' => $request->category_id,
-            'description' => $request->description,
-            'price' => $request->price, // <-- AGREGADO: Guardar el precio
-            'image_path' => $imagePath,
-        ]);
+        $proyecto->save();
 
         return redirect()->route('proyectos.index')->with('success', 'Proyecto creado exitosamente.');
     }
@@ -90,7 +92,10 @@ class ProjectController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
 
-        $data = $request->only(['title', 'category_id', 'description', 'price']);
+        $proyecto->title = $request->title;
+        $proyecto->category_id = $request->category_id;
+        $proyecto->description = $request->description;
+        $proyecto->price = $request->price;
 
         // Si el usuario sube una nueva imagen al editar
         if ($request->hasFile('image')) {
@@ -99,11 +104,14 @@ class ProjectController extends Controller
                 Storage::disk('r2')->delete($proyecto->image_path);
             }
             
-            // Procesamos y guardamos la nueva imagen
-            $data['image_path'] = $this->processAndSaveImage($request->file('image'));
+            // 1. Guardamos el archivo en R2 y capturamos el string de la ruta (ej. 'proyectos/hash.jpg')
+            $path = $request->file('image')->store('proyectos', 'r2');
+            
+            // 2. Asignamos EL STRING DIRECTAMENTE al modelo, NUNCA un índice o llave.
+            $proyecto->image_path = $path;
         }
 
-        $proyecto->update($data);
+        $proyecto->save();
 
         return redirect()->route('proyectos.index')->with('success', 'Proyecto actualizado exitosamente.');
     }
@@ -123,13 +131,5 @@ class ProjectController extends Controller
         return redirect()->route('proyectos.index')->with('success', 'Proyecto eliminado.');
     }
 
-    /**
-     * --- MÉTODO PRIVADO ---
-     * Guarda la imagen en el disco 'r2' y retorna el $path exacto.
-     */
-    private function processAndSaveImage($file)
-    {
-        $path = $file->store('proyectos', 'r2');
-        return $path;
-    }
+
 }
