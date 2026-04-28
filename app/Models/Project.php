@@ -4,12 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Project extends Model
 {
     use HasFactory;
 
-    // Campos que permitimos llenar masivamente desde el formulario del panel
+    /**
+     * Atributos que se pueden asignar masivamente.
+     */
     protected $fillable = [
         'category_id',
         'title',
@@ -18,24 +22,35 @@ class Project extends Model
         'image_path',
     ];
 
-    // Agregamos el nuevo atributo virtual para que React pueda leerlo
+    /**
+     * Atributos dinámicos que se añaden al JSON (para React).
+     */
     protected $appends = ['image_url'];
 
-    // Relación: Un proyecto pertenece a una categoría
-    public function category()
+    /**
+     * Relación: Un proyecto pertenece a una categoría.
+     * Importante para que no se rompa el panel de administración.
+     */
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    // Accessor para generar la URL firmada de R2
+    /**
+     * Accessor para generar la URL firmada de Cloudflare R2.
+     * Esta es la función que React usará para mostrar la imagen.
+     */
     public function getImageUrlAttribute()
     {
         if ($this->image_path) {
-            return \Illuminate\Support\Facades\Storage::disk('r2')->temporaryUrl(
+            // Genera un enlace seguro válido por 2 horas (120 min)
+            return Storage::disk('r2')->temporaryUrl(
                 $this->image_path, 
                 now()->addMinutes(120)
             );
         }
-        return null;
+
+        // Imagen por defecto si no hay ruta en la BD
+        return '/imagenes/asador-1.png';
     }
 }
