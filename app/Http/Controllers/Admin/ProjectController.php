@@ -8,8 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver; // Usamos GD que viene por defecto en PHP
+
 
 class ProjectController extends Controller
 {
@@ -97,8 +96,7 @@ class ProjectController extends Controller
         if ($request->hasFile('image')) {
             // Eliminar imagen anterior si existe en R2
             if ($proyecto->image_path) {
-                $filename = basename($proyecto->image_path);
-                Storage::disk('r2')->delete('projects/' . $filename);
+                Storage::disk('s3')->delete($proyecto->image_path);
             }
             
             // Procesamos y guardamos la nueva imagen
@@ -117,8 +115,7 @@ class ProjectController extends Controller
     {
         // Borrar imagen al eliminar proyecto
         if ($proyecto->image_path) {
-            $filename = basename($proyecto->image_path);
-            Storage::disk('r2')->delete('projects/' . $filename);
+            Storage::disk('s3')->delete($proyecto->image_path);
         }
         
         $proyecto->delete();
@@ -128,27 +125,10 @@ class ProjectController extends Controller
 
     /**
      * --- MÉTODO PRIVADO ---
-     * Toma el archivo original, lo convierte a WebP y lo guarda en el storage disk.
+     * Guarda el archivo original directamente en Cloudflare R2 (disco 's3') para evitar colapsos de RAM en Vercel.
      */
     private function processAndSaveImage($file)
     {
-        // Inicializamos Intervention Image
-        $manager = new ImageManager(new Driver());
-        
-        // Leemos el archivo temporal
-        $image = $manager->read($file->getRealPath());
-        
-        // Lo codificamos a WebP con 80% de calidad
-        $encoded = (string) $image->toWebp(80);
-        
-        // Generamos un nombre único y ruta
-        $filename = uniqid('project_', true) . '.webp';
-        $path = 'projects/' . $filename;
-        
-        // Guardamos el archivo en el disco r2 de forma privada (o sin public si R2 no es público)
-        Storage::disk('r2')->put($path, $encoded);
-        
-        // Retornamos la ruta relativa para guardarla en Neon
-        return $path;
+        return $file->store('proyectos', 's3');
     }
 }
