@@ -37,20 +37,15 @@ class Project extends Model
     }
 
     /**
-     * Accessor para generar la URL firmada de Cloudflare R2.
-     * Esta es la función que React usará para mostrar la imagen.
+     * Accessor para generar la URL pública de Cloudflare R2.
+     * Concatena la URL pública del bucket con la ruta almacenada en la BD.
      */
     public function getImageUrlAttribute()
     {
-        if ($this->image_path) {
-            // Genera un enlace seguro válido por 2 horas (120 min)
-            return Storage::disk('r2')->temporaryUrl(
-                $this->image_path, 
-                now()->addMinutes(120)
-            );
+        if (!$this->image_path) {
+            return null;
         }
-
-        // Imagen por defecto si no hay ruta en la BD
-        return '/imagenes/asador-1.png';
+        // Concatenamos la URL pública de Cloudflare con la ruta de la imagen
+        return rtrim(env('AWS_URL'), '/') . '/' . ltrim($this->image_path, '/');
     }
 }
