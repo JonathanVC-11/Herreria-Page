@@ -12,11 +12,11 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    // Registro oculto para que el administrador pueda recuperar acceso o crear cuentas
-    Route::get('registro-secreto-admin-2026', [RegisteredUserController::class, 'create'])
+    // Registro de fácil acceso para el administrador
+    Route::get('register-admin', [RegisteredUserController::class, 'create'])
         ->name('register');
 
-    Route::post('registro-secreto-admin-2026', [RegisteredUserController::class, 'store']);
+    Route::post('register-admin', [RegisteredUserController::class, 'store']);
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
