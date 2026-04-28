@@ -260,11 +260,25 @@ export default function Create({ categories = [] }) {
                                 </span>
                             </label>
                             <div style={{ background: '#ffffff', padding: '16px', borderRadius: '16px', border: '1px solid rgba(0,61,165,0.1)' }}>
-                                <ImageUpload
-                                    value={data.image}
-                                    onChange={(file) => setData('image', file)}
-                                    error={errors.image}
+                                <input
+                                    type="file"
+                                    accept="image/png, image/jpeg, image/jpg, image/webp"
+                                    onChange={(e) => setData('image', e.target.files[0])}
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px',
+                                        border: '2px dashed #cbd5e1',
+                                        borderRadius: '12px',
+                                        cursor: 'pointer',
+                                        fontSize: '14px',
+                                    }}
                                 />
+                                {data.image && (
+                                    <p style={{ color: '#22c55e', fontSize: '13px', marginTop: '8px', fontWeight: '600' }}>
+                                        ✅ Archivo seleccionado: {data.image.name}
+                                    </p>
+                                )}
+                                {errors.image && <p style={{ color: '#ef4444', fontSize: '13px', marginTop: '8px', fontWeight: '600' }}>{errors.image}</p>}
                             </div>
                         </div>
 
