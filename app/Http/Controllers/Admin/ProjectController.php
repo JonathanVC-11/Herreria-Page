@@ -56,11 +56,10 @@ class ProjectController extends Controller
         $proyecto->price = $request->price;
 
         if ($request->hasFile('image')) {
-            // 1. Guardamos el archivo en R2 y capturamos el string de la ruta (ej. 'proyectos/hash.jpg')
             $path = $request->file('image')->store('proyectos', 'r2');
-            
-            // 2. Asignamos EL STRING DIRECTAMENTE al modelo, NUNCA un índice o llave.
-            $proyecto->image_path = $path;
+            if ($path) {
+                $proyecto->image_path = $path; // Asignamos el string generado por R2
+            }
         }
 
         $proyecto->save();
@@ -104,11 +103,10 @@ class ProjectController extends Controller
                 Storage::disk('r2')->delete($proyecto->image_path);
             }
             
-            // 1. Guardamos el archivo en R2 y capturamos el string de la ruta (ej. 'proyectos/hash.jpg')
             $path = $request->file('image')->store('proyectos', 'r2');
-            
-            // 2. Asignamos EL STRING DIRECTAMENTE al modelo, NUNCA un índice o llave.
-            $proyecto->image_path = $path;
+            if ($path) {
+                $proyecto->image_path = $path; // Asignamos el string generado por R2
+            }
         }
 
         $proyecto->save();
