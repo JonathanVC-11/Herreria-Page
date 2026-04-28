@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 
@@ -42,10 +43,10 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         // DEBUG: Ver qué llega del frontend
-        \Log::info('=== STORE: Datos recibidos ===', $request->all());
-        \Log::info('=== STORE: ¿Tiene archivo? ===', ['hasFile' => $request->hasFile('image')]);
+        Log::info('=== STORE: Datos recibidos ===', $request->all());
+        Log::info('=== STORE: ¿Tiene archivo? ===', ['hasFile' => $request->hasFile('image')]);
         if ($request->hasFile('image')) {
-            \Log::info('=== STORE: Info del archivo ===', [
+            Log::info('=== STORE: Info del archivo ===', [
                 'originalName' => $request->file('image')->getClientOriginalName(),
                 'size' => $request->file('image')->getSize(),
                 'mime' => $request->file('image')->getMimeType(),
@@ -68,14 +69,14 @@ class ProjectController extends Controller
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('proyectos', 'r2');
-            \Log::info('=== STORE: Resultado de store() ===', ['path' => $path, 'type' => gettype($path)]);
+            Log::info('=== STORE: Resultado de store() ===', ['path' => $path, 'type' => gettype($path)]);
             if ($path) {
                 $proyecto->image_path = $path;
             }
         }
 
         $proyecto->save();
-        \Log::info('=== STORE: Proyecto guardado ===', ['id' => $proyecto->id, 'image_path' => $proyecto->image_path]);
+        Log::info('=== STORE: Proyecto guardado ===', ['id' => $proyecto->id, 'image_path' => $proyecto->image_path]);
 
         return redirect()->route('proyectos.index')->with('success', 'Proyecto creado exitosamente.');
     }
@@ -97,8 +98,8 @@ class ProjectController extends Controller
     public function update(Request $request, Project $proyecto)
     {
         // DEBUG: Ver qué llega del frontend
-        \Log::info('=== UPDATE: Datos recibidos ===', $request->all());
-        \Log::info('=== UPDATE: ¿Tiene archivo? ===', ['hasFile' => $request->hasFile('image')]);
+        Log::info('=== UPDATE: Datos recibidos ===', $request->all());
+        Log::info('=== UPDATE: ¿Tiene archivo? ===', ['hasFile' => $request->hasFile('image')]);
 
         $request->validate([
             'title' => 'required|string|max:255',
@@ -121,14 +122,14 @@ class ProjectController extends Controller
             }
             
             $path = $request->file('image')->store('proyectos', 'r2');
-            \Log::info('=== UPDATE: Resultado de store() ===', ['path' => $path, 'type' => gettype($path)]);
+            Log::info('=== UPDATE: Resultado de store() ===', ['path' => $path, 'type' => gettype($path)]);
             if ($path) {
                 $proyecto->image_path = $path;
             }
         }
 
         $proyecto->save();
-        \Log::info('=== UPDATE: Proyecto guardado ===', ['id' => $proyecto->id, 'image_path' => $proyecto->image_path]);
+        Log::info('=== UPDATE: Proyecto guardado ===', ['id' => $proyecto->id, 'image_path' => $proyecto->image_path]);
 
         return redirect()->route('proyectos.index')->with('success', 'Proyecto actualizado exitosamente.');
     }
