@@ -14,7 +14,9 @@ export default function Create({ categories = [] }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post('/proyectos');
+        post('/proyectos', {
+            forceFormData: true,
+        });
     };
 
     return (
