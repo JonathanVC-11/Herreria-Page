@@ -38,14 +38,31 @@ class Project extends Model
 
     /**
      * Accessor para generar la URL pública de Cloudflare R2.
-     * Concatena la URL pública del bucket con la ruta almacenada en la BD.
+     * Maneja strings simples, JSON arrays y arrays nativos.
      */
     public function getImageUrlAttribute()
     {
-        if (!$this->image_path) {
+        if (empty($this->image_path)) {
             return null;
         }
-        // Concatenamos la URL pública de Cloudflare con la ruta de la imagen
-        return rtrim(env('AWS_URL'), '/') . '/' . ltrim($this->image_path, '/');
+
+        $path = $this->image_path;
+
+        // Si es un string que parece un JSON de array (ej. '["proyectos/foto.jpg"]')
+        if (is_string($path) && str_starts_with($path, '[')) {
+            $decoded = json_decode($path, true);
+            if (is_array($decoded) && count($decoded) > 0) {
+                $path = $decoded[0]; // Tomamos la primera foto
+            }
+        }
+        // Si ya es un array nativo
+        elseif (is_array($path) && count($path) > 0) {
+            $path = $path[0];
+        }
+
+        // Limpiamos comillas accidentales y barras
+        $path = trim($path, ' "/');
+
+        return rtrim(env('AWS_URL'), '/') . '/' . $path;
     }
 }
