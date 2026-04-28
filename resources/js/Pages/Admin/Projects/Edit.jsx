@@ -15,6 +15,8 @@ export default function Edit({ proyecto, categories = [] }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log('=== DEBUG EDIT: Archivo en el estado ===', data.image);
+        console.log('=== DEBUG EDIT: Tipo ===', typeof data.image, data.image instanceof File);
         post(`/proyectos/${proyecto.id}`, {
             forceFormData: true,
         });

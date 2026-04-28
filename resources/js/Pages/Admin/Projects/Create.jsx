@@ -14,6 +14,9 @@ export default function Create({ categories = [] }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log('=== DEBUG: Archivo en el estado ===', data.image);
+        console.log('=== DEBUG: Tipo ===', typeof data.image, data.image instanceof File);
+        console.log('=== DEBUG: Todos los datos ===', data);
         post('/proyectos', {
             forceFormData: true,
         });
