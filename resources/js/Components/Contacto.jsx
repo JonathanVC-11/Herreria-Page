@@ -191,7 +191,7 @@ export default function Contacto() {
                   onFocus={() => setFocusedInput('categoria')}
                   onBlur={() => setFocusedInput(null)}
                 >
-                  <option value="">¿Qué sistema necesitas desarrollar?</option>
+                  <option value="">¿Qué proyecto necesitas cotizar?</option>
                   <option>Ventanas de aluminio</option>
                   <option>Puertas y zaguanes</option>
                   <option>Barandales</option>
