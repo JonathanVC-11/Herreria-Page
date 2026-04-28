@@ -44,7 +44,7 @@ class Project extends Model
     {
         if ($this->image_path) {
             // Genera un enlace seguro válido por 2 horas (120 min)
-            return Storage::disk('s3')->temporaryUrl(
+            return Storage::disk('r2')->temporaryUrl(
                 $this->image_path, 
                 now()->addMinutes(120)
             );

@@ -96,7 +96,7 @@ class ProjectController extends Controller
         if ($request->hasFile('image')) {
             // Eliminar imagen anterior si existe en R2
             if ($proyecto->image_path) {
-                Storage::disk('s3')->delete($proyecto->image_path);
+                Storage::disk('r2')->delete($proyecto->image_path);
             }
             
             // Procesamos y guardamos la nueva imagen
@@ -115,7 +115,7 @@ class ProjectController extends Controller
     {
         // Borrar imagen al eliminar proyecto
         if ($proyecto->image_path) {
-            Storage::disk('s3')->delete($proyecto->image_path);
+            Storage::disk('r2')->delete($proyecto->image_path);
         }
         
         $proyecto->delete();
@@ -125,10 +125,10 @@ class ProjectController extends Controller
 
     /**
      * --- MÉTODO PRIVADO ---
-     * Guarda el archivo original directamente en Cloudflare R2 (disco 's3') para evitar colapsos de RAM en Vercel.
+     * Al no forzar un disco, Laravel usará el disco 'r2' configurado en Vercel por defecto.
      */
     private function processAndSaveImage($file)
     {
-        return $file->store('proyectos', 's3');
+        return $file->store('proyectos');
     }
 }
