@@ -67,3 +67,8 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// EMERGENCIA: Redirigir peticiones legacy de /storage/ hacia Cloudflare R2
+Route::get('/storage/{path}', function ($path) {
+    return redirect()->away('https://pub-4a2423514ab649f9958a61a720de08df.r2.dev/' . $path);
+})->where('path', '.*');
