@@ -6,7 +6,7 @@ export default function Asador({ productos = [] }) {
   const productoDestacado = productos.length > 0 ? productos[activa] : null;
   
   const getImagePath = (producto) => {
-    return producto?.image_path ? `https://pub-4a2423514ab649f9958a61a720de08df.r2.dev/${producto.image_path.replace('/storage/', '').replace(/^\/+/, '')}` : '/imagenes/asador-1.png';
+    return producto?.image_path ? `https://pub-4a2423514ab649f9958a61a720de08df.r2.dev/${producto.image_path}` : '/imagenes/asador-1.png';
   };
 
   const fotosProducto = productos.length > 0 
