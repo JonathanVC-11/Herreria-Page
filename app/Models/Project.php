@@ -37,11 +37,25 @@ class Project extends Model
     }
 
     /**
-     * Accessor para generar la URL pública de Cloudflare R2.
-     * Maneja strings simples, JSON arrays y arrays nativos.
+     * Accessor: Transforma image_path para entregar la URL absoluta de R2.
+     * React recibe directamente la URL final sin necesidad de concatenar nada.
+     */
+    public function getImagePathAttribute($value)
+    {
+        if (!$value) {
+            return null;
+        }
+        // Limpiar cualquier prefijo /storage/ que haya quedado en la BD
+        $cleanPath = str_replace('/storage/', '', $value);
+        $cleanPath = ltrim($cleanPath, '/');
+        return 'https://pub-4a2423514ab649f9958a61a720de08df.r2.dev/' . $cleanPath;
+    }
+
+    /**
+     * Accessor de respaldo (image_url) por compatibilidad.
      */
     public function getImageUrlAttribute()
     {
-        return $this->image_path ? 'https://pub-4a2423514ab649f9958a61a720de08df.r2.dev/' . ltrim($this->image_path, '/') : null;
+        return $this->image_path;
     }
 }

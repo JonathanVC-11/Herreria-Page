@@ -116,7 +116,7 @@ export default function Carrusel({ proyectos = [], onProductoClick }) {
                 alignItems: 'center' 
               }} className="slide-image">
                  <img 
-                   src={proyecto.image_path ? `https://pub-4a2423514ab649f9958a61a720de08df.r2.dev/${proyecto.image_path}` : '/imagenes/asador-1.png'} 
+                   src={proyecto.image_path || '/imagenes/asador-1.png'} 
                    alt={proyecto.title} 
                    style={{ 
                      height: '90%', 
